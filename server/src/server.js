@@ -1,9 +1,24 @@
 const express = require('express')
 const app = express()
-//const socket = require('socket.io')
+const cors = require('cors')
+
 const http = require('http').createServer(app)
 
 const io = require('socket.io')(http)
+
+const Message = require('./app/models/Message')
+
+app.use(cors())
+
+
+app.get('/', async (req, res) => {
+    const messages = await Message.find()
+
+    return res.json(messages)
+})
+
+
+
 
 io.on('connection', socket => {
     console.log('[IO] Connection => Server has a new connection', socket.id)

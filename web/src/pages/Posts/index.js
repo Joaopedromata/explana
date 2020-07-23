@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './styles.css'
 import io from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
+import api from '../../services/api'
 
 const myId = uuidv4()
 
@@ -15,8 +16,12 @@ const Posts = () => {
     const [ messages, updateMessages ] = useState([])
 
     useEffect(() => {
+        api.get('/').then(res => updateMessages([...res.data, ...messages]))       
+    }, [])
+
+    useEffect(() => {
         const handleNewMessage = newMessage => 
-            updateMessages([...messages, newMessage])
+            updateMessages([newMessage,...messages])
             socket.on('chat.message', handleNewMessage)
             return () => socket.off('chat.message', handleNewMessage)
     }, [messages])
