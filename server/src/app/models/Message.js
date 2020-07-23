@@ -3,11 +3,11 @@ const mongoose = require('../../database')
 const MessageSchema = mongoose.Schema({
     id: {
         type: String,
-        require: true
+        require: true,
+        unique: true,
     },
     message: {
         type: String,
-        unique: true,
         required: true,
         lowercase: true
     },

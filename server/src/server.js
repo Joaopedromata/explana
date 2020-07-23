@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
+app.use(express.json())
+
 const http = require('http').createServer(app)
 
 const io = require('socket.io')(http)
@@ -19,11 +21,22 @@ app.get('/', async (req, res) => {
 
 
 
-
 io.on('connection', socket => {
     console.log('[IO] Connection => Server has a new connection', socket.id)
     socket.on('chat.message', data => {
         io.emit('chat.message', data)
+        app.post('/', async (req, res) => {
+            const { id, message } = req.body
+            
+            await Message.create(req.body).then(() => {
+                return res.json(req.body)
+            }).catch((err) => {
+                console.log('[POST] Error => '+err)
+            })
+            
+            
+        })
+        
     })
     socket.on('disconnect', () => {
         console.log('[SOCKET] Disconnect => A connection was disconnected')

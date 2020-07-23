@@ -28,10 +28,15 @@ const Posts = () => {
 
     const handleFormSubmit = e => {
         e.preventDefault()
-        socket.emit('chat.message', {
+        
+        const data = {
             id: myId,
             message
-        })
+        }
+        socket.emit('chat.message', data)       
+        api.post('/', data).catch((err) => {
+             console.log(err)
+        } )
         updateMessage('')
     }
 
