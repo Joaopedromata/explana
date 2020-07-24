@@ -1,38 +1,48 @@
 .container {
-    margin-top: 3vh;
     height: 79vh;
-    width: calc(100% - 5vh);
-    background-color: #c2b4e9;
-    font-family: Arial, sans-serif;
-
-    border-radius: 16px 16px 0 0 ;
+    width: 100%;
+    font-size: regular;
 }
 
 .list {
-    margin: 0;
-    padding: 1rem;
+    margin-top: 3vh;
+    padding: 1rem 1rem 0 1rem;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .list__item {
     list-style: none;
+    
 }
 
 .list__item.list__item--mine {
-    text-align: right
+    /* text-align: right */
 }
 
 .message {
     border: 1px solid transparent;
-    width: 80%; 
+    width: 100%; 
     border-radius: 5px;
-    display: inline-block;
 
     margin-bottom: 1rem;
-    padding: 1rem 1rem;
+    padding: 1rem;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    flex-direction: column;
 }
 
-.message--time {
-    margin: 0;
+.message strong{
+    margin-bottom: 1vh;
+    font-size: 14px;
+}
+
+.message p{
+    margin-top: 1vh;
+    font-size: 13px;
+    text-align: end;
 }
 
 .message.message--mine {
@@ -46,7 +56,6 @@
 }
 
 .form {
-    background-color: #a36ad2;
    
     width: 100%;
     height: 18vh;

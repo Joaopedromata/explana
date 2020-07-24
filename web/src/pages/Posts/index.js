@@ -52,7 +52,9 @@ const Posts = () => {
                         key={index}
                     >
                         <span className={`message message--${data.id === myId ? 'mine' : 'other'}`}>
+                            <strong>Anônimo</strong>
                             {data.message}
+                            <p>postado hà 16 minutos</p>
                         </span>
                     </li>
                 ))}
