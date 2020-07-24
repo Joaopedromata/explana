@@ -23,12 +23,12 @@
 
 .message {
     border: 1px solid transparent;
-    max-width: 80%; 
+    width: 80%; 
     border-radius: 5px;
     display: inline-block;
 
     margin-bottom: 1rem;
-    padding: .5rem 1rem;
+    padding: 1rem 1rem;
 }
 
 .message--time {

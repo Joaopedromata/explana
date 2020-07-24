@@ -16,7 +16,7 @@ const Posts = () => {
     const [ messages, updateMessages ] = useState([])
 
     useEffect(() => {
-        api.get('/').then(res => updateMessages([...res.data, ...messages]))       
+        api.get('/').then(res => updateMessages([...res.data].reverse()))       
     }, [])
 
     useEffect(() => {
@@ -54,14 +54,14 @@ const Posts = () => {
                         <span className={`message message--${data.id === myId ? 'mine' : 'other'}`}>
                             {data.message}
                         </span>
-                 </li>
+                    </li>
                 ))}
             </ul>
         </main>
         <form className="form" onSubmit={handleFormSubmit}>
             <input 
                 className="form__field"
-                placeholder="Explane aquim"
+                placeholder="Explane aqui..."
                 onChange={e => updateMessage(e.target.value)}
                 value={message}
             />

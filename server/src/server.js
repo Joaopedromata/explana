@@ -25,9 +25,7 @@ io.on('connection', socket => {
     console.log('[IO] Connection => Server has a new connection', socket.id)
     socket.on('chat.message', data => {
         io.emit('chat.message', data)
-        app.post('/', async (req, res) => {
-            const { id, message } = req.body
-            
+        app.post('/', async (req, res) => {            
             await Message.create(req.body).then(() => {
                 return res.json(req.body)
             }).catch((err) => {
