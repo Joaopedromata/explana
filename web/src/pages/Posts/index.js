@@ -3,6 +3,7 @@ import './styles.css'
 import io from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
 import api from '../../services/api'
+import NavBar from '../../components/NavBar'
 
 const myId = uuidv4()
 
@@ -44,8 +45,17 @@ const Posts = () => {
 
     return (
     <>
+        <NavBar value={'UEMG Ibirité'} />
         <main className="container">
             <ul className="list">
+                <li className='list__item list__item--mine'>
+                    <span className='message message--mine'>
+                        <strong>Desconto Zé Delivery</strong>
+                        Compre com nossos colaboradores. Use nosso cupom de desconto EXPLANANOZÉ e ganhe 15% de desconto no seu primeiro pedido
+                        <p>hà 16 minutos</p>
+                    </span>
+                </li>
+                    
                 {messages.map((data, index) => (
                     <li 
                         className={`list__item list__item--${data.id === myId ? 'mine' : 'other'}`}
@@ -54,7 +64,7 @@ const Posts = () => {
                         <span className={`message message--${data.id === myId ? 'mine' : 'other'}`}>
                             <strong>Anônimo</strong>
                             {data.message}
-                            <p>postado hà 16 minutos</p>
+                            <p>hà 7 minutos</p>
                         </span>
                     </li>
                 ))}

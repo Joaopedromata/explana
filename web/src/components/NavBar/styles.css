@@ -1,0 +1,35 @@
+.navbar {
+    height: 55px;
+    width: 100%;
+    background-color: rgba(128, 0, 85, 0.849);
+    box-shadow: 1.5px 1.5px 7px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    position: relative;
+}
+
+.navbar__menu {
+    color: white;
+    position: absolute;
+    left: 3%;
+}
+
+.navbar__server {
+    width: 46%;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar__server--hash {
+    color: rgba(255, 255, 255, 0.534)
+}
+
+.navbar__server--title {
+    color: rgba(255, 255, 255, 0.979)
+}

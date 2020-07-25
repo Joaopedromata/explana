@@ -4,12 +4,10 @@ const MessageSchema = mongoose.Schema({
     id: {
         type: String,
         require: true,
-        unique: true,
     },
     message: {
         type: String,
         required: true,
-        lowercase: true
     },
     createdAt: {
         type: Date,
