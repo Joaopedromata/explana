@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import './styles.css'
 import io from 'socket.io-client'
-import { v4 as uuidv4 } from 'uuid'
 import api from '../../services/api'
 import NavBar from '../../components/NavBar'
-
-const myId = uuidv4()
 
 const socket = io('http://localhost:3333')
 socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
 
 
-const Posts = () => {
+const Posts = (props) => {
 
+    const token = props.location.state.token
+    const myId = props.location.state.id
+
+    console.log(token)
+    
     const [ message, updateMessage ] = useState('')
     const [ messages, updateMessages ] = useState([])
 
     useEffect(() => {
-        api.get('/').then(res => updateMessages([...res.data].reverse()))       
+        api.get('/messages', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => updateMessages([...res.data].reverse()))       
     }, [])
 
     useEffect(() => {
@@ -35,7 +41,7 @@ const Posts = () => {
             message
         }
         socket.emit('chat.message', data)       
-        api.post('/', data).catch((err) => {
+        api.post('/messages', data).catch((err) => {
              console.log(err)
         } )
         updateMessage('')
