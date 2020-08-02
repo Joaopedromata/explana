@@ -20,7 +20,7 @@ const SignIn = () => {
 
         api.post('/signin', data)
             .then((res) => {
-                history.push('/messages', res.data)
+                history.push('/server', res.data)
             })
             .catch((err) => {
                 console.error(err)
@@ -33,11 +33,13 @@ const SignIn = () => {
             <form className="form-signin" onSubmit={handleFormSubmit}>
                 <img src={logo} alt="explana" className="logo" />
                 <div className="input__group--signin">
+                    <label className="input__label">USUÁRIO</label>
                     <input 
                         className="form__field--signin"
                         onChange={e => updateUsername(e.target.value)}
                         value={username}
                     />
+                    <label className="input__label">SENHA</label>
                     <input 
                         className="form__field--signin"
                         type="password"
@@ -51,7 +53,7 @@ const SignIn = () => {
                         className="link__button--signup"
                         to="/signup"
                     >
-                        REGISTRAR-SE
+                        REGISTRAR
                     </Link>
                 </div>
                 <Link className="link--forgot">

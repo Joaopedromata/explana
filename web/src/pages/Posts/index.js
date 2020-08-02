@@ -12,6 +12,8 @@ const Posts = (props) => {
 
     const token = props.location.state.token
     const myId = props.location.state.id
+    const server = props.location.state.server
+    const serverName = props.location.state.serverName
 
     const [ message, updateMessage ] = useState('')
     const [ messages, updateMessages ] = useState([])
@@ -19,7 +21,8 @@ const Posts = (props) => {
     useEffect(() => {
         api.get('/messages', {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                Servers: server
             }
         }).then(res => updateMessages([...res.data].reverse()))       
     }, [])
@@ -36,6 +39,7 @@ const Posts = (props) => {
         
         const data = {
             id: myId,
+            server,
             message
         }
         socket.emit('chat.message', data)       
@@ -49,7 +53,7 @@ const Posts = (props) => {
 
     return (
     <>
-        <NavBar value={'UEMG Ibirité'} />
+        <NavBar value={serverName} />
         <main className="container">
             <ul className="list">
                 <li className='list__item list__item--mine'>

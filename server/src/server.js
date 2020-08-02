@@ -16,10 +16,11 @@ const io = require('socket.io')(http)
 
 const Message = require('./app/models/Message')
 const Account = require('./app/models/Account')
+const Server = require('./app/models/Servers')
 
 const client = new totalvoice(process.env.TOKEN_SMS)
 
-const saltRounds = 15
+const saltRounds = 10
 
 
 app.use(cors())
@@ -49,7 +50,7 @@ app.post('/signin', async (req, res) => {
     const match = bcrypt.compareSync(password, checkUser.password)
 
     if (match)
-    
+
         return res.send({ 
             token: generateToken({ id: checkUser._id  }),
             id: checkUser._id 
@@ -87,6 +88,24 @@ app.post('/account', async (req, res) => {
     
 })
 
+app.get('/server', async (req,res) => {
+
+    const servers = await Server.find()
+
+    return res.json(servers)
+
+})
+
+app.post('/server', async (req,res) => {
+
+    await Server.create(req.body)
+    .then((data) => {
+        return res.json(data)
+    }).catch((err) => {
+        console.log('[POST] Message Error => '+err)
+    })
+})
+
 app.post('/check', async (req, res) => {
 
     const { username, age, mobile_number, password, activation_code } = req.body
@@ -115,7 +134,10 @@ app.post('/check', async (req, res) => {
 })
 
 app.get('/messages', authMiddleware , async (req, res) => {
-    const messages = await Message.find()
+
+    const server = req.headers.servers
+
+    const messages = await Message.find({ server: server })
 
     return res.json(messages)
 })

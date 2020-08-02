@@ -22,7 +22,7 @@ const CheckCode = (props) => {
         console.log(data.activation_code)
 
         api.post('/check', data).then((res) => {
-            history.push('/messages', res.data)
+            history.push('/server', res.data)
         })
         // if(codeSMS === code.toString()){
         //    
