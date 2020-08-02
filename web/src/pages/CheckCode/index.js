@@ -1,35 +1,44 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import api from '../../services/api'
+import './styles.css'
+
 
 const CheckCode = (props) => {
 
-    const [ codeSMS, updateCodeSMS ] = useState('')
+    const [ codeSMS, updateCodeSMS ] = useState(0)
 
     const history = useHistory()
 
-    const code = props.location.state.code
-    const mobile_number = props.location.state.mobile_number
-    
+    const data = {
+        username: props.location.state.username,
+        age: props.location.state.age,
+        mobile_number: props.location.state.mobile_number,
+        password: props.location.state.password,
+        activation_code: codeSMS
+    }
+
     const handleFormSubmit = (e) => {
-        
-        if(codeSMS === code.toString()){
-            history.push('/signin', { 
-                mobile_number,
-                code
-            })
-        }
+        console.log(data.activation_code)
+
+        api.post('/check', data).then((res) => {
+            history.push('/messages', res.data)
+        })
+        // if(codeSMS === code.toString()){
+        //    
+        // }
 
         
-        updateCodeSMS('')
+        // updateCodeSMS('')
 
         e.preventDefault()
     }
 
 
     return (
-        <form className="form-account" onSubmit={handleFormSubmit}>
+        <form className="form-code" onSubmit={handleFormSubmit}>
         <input 
-            className="form__field"
+            className="form__field--code"
             placeholder="Digite seu código"
             onChange={e => updateCodeSMS(e.target.value)}
             value={codeSMS}

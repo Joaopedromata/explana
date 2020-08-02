@@ -1,0 +1,23 @@
+.form-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.form__field--code {
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+
+    width: 100%;
+    height: 40px;
+}
+  
+.form__field--code:focus {
+    border-color: #a3f7ff;
+    box-shadow: 0 0 7px #a3f7ff;
+    outline: none;
+}

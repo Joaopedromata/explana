@@ -1,17 +1,117 @@
-.form-account {
-    margin-top: 30vh;
+.container__signin{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;   
+    align-items: center;
+    justify-content: center;
+}
+
+.form-signin{
+    height: 80vh;
+    width: 380px;
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    height: 40vh;
-    width: 40vh
 }
 
+.logo {
+    height: 180px;
+    width: 180px
+}
 
-
-button {
-    height:10vh;
+.input__group--signin{
+    height: 25%;
     width: 100%;
-    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
+
+.form__field--signin{
+    width: 70%;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    color: #333;
+    font-size: 1rem;
+    height: 50px;    
+    padding: 0 24px;
+}
+
+.form__field--signin:focus{
+    border-color: #9E51EB;
+    box-shadow: 0 0 7px #9E51EB;
+    outline: none;
+}
+
+.button__group--signin{
+    width: 70%;
+    height: 15%;
+
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button--messages{
+    width: 120px;
+    height: 45px;
+    border-radius: 18px 18px 18px 0;
+    border: none;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+    outline: inherit;
+
+    font-size: 0.8rem;
+    color: #fff;
+    cursor: pointer;
+
+    background-color: #9E51EB;
+    transition: filter 0.2s;
+}
+
+.button--messages:hover{
+    filter:brightness(90%);
+}
+
+.link__button--signup{
+    width: 120px;
+    height: 45px;
+    border-radius: 18px 18px 18px 0;
+    border: solid 1px #9E51EB;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 0.8rem;
+    color: #fff;
+    text-decoration: none;
+
+    background-color: #A873DC;
+    transition: filter 0.2s;
+
+}
+
+.link__button--signup:hover{
+    filter:brightness(90%);
+}
+
+
+.link--forgot {
+    color: rgba(255, 255, 255, 0.7)
+}
+
+
+
+
+
+
+
+
+

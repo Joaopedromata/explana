@@ -8,8 +8,7 @@
 #root {
     height: 100vh;
     width: 100%;
-    /* background-color: #a36ad2; */
-    background-color: #dfade4;
+    background-color: #BE95EC;
 
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -17,6 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+  
         
 }

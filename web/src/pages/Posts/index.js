@@ -13,8 +13,6 @@ const Posts = (props) => {
     const token = props.location.state.token
     const myId = props.location.state.id
 
-    console.log(token)
-    
     const [ message, updateMessage ] = useState('')
     const [ messages, updateMessages ] = useState([])
 

@@ -6,6 +6,7 @@ const totalvoice = require('totalvoice-node')
 const jwt = require('jsonwebtoken')
 const authConfig = require('./config/auth.json')
 const authMiddleware = require('./app/middlewares/auth')
+const bcrypt = require('bcrypt')
 
 app.use(express.json())
 
@@ -18,63 +19,59 @@ const Account = require('./app/models/Account')
 
 const client = new totalvoice(process.env.TOKEN_SMS)
 
+const saltRounds = 15
+
+
 app.use(cors())
+
+var code = 0
 
 
 const getRandomNumbers = () => {
     return Math.floor(Math.random() * (1000 - 9999) + 9999)
 }
 
-code = ''
-
 const generateToken = (params = {}) => {
     return jwt.sign(params, authConfig.secret)
 
 }
 
+app.post('/signin', async (req, res) => {
 
+    const { username, password } = req.body 
 
-app.get('/teste', authMiddleware, (req, res) => {
-    res.send({ ok: "alkmds", user: req.userId })
+    const checkUser = (await Account.findOne({ username }))
+
+    if (!checkUser)
+
+        return res.status(400).send('[GET] Message Error => The username is not exist')    
+    
+    const match = bcrypt.compareSync(password, checkUser.password)
+
+    if (match)
+    
+        return res.send({ 
+            token: generateToken({ id: checkUser._id  }),
+            id: checkUser._id 
+        })
+
+    return res.status(400).send('[GET] Message Error => The password is wrong') 
+    
 })
 
 
 app.post('/account', async (req, res) => {
 
-    const { age, mobile_number, activation_code, password } = req.body
+    const { username, age, mobile_number, password } = req.body
     
-    
-
-    if(activation_code !== code)
-
-        return res.status(400).send('[POST] Message Error => Code is not right')
-
-    await Account.create({
-        age,
-        mobile_number,
-        password
-    }).then((data) => {
-        return res.send({ 
-            token: generateToken({ id: data._id }),
-            id: data._id
-        })
-    }).catch((err) => {
-        console.log('[POST] Message Error => '+err)
-    })
-})
-
-app.post('/check', async (req, res) => {
-
-    const { mobile_number } = req.body
-
     const checkAccount = (await Account.findOne({ mobile_number }))
 
     if (checkAccount)
 
         return res.status(400).send('[POST] Message Error => The mobile number is already exist')
 
-    code = getRandomNumbers()
-        
+    code = getRandomNumbers() 
+
     // client.sms.enviar(mobile_number,
     //     `Seu código de ativação Explana: ${code}`
     // ).then((data) => {
@@ -83,12 +80,36 @@ app.post('/check', async (req, res) => {
     // .catch((err) => {
     //     console.error(err)
     // })
-
+        
     console.log(code)
 
+    return res.status(200).send(req.body)
+    
+})
 
-    return res.send({ 
-        code
+app.post('/check', async (req, res) => {
+
+    const { username, age, mobile_number, password, activation_code } = req.body
+
+    if(parseInt(activation_code) !== code)
+
+        return res.status(400).send('[POST] Message Error => Code is not right')
+
+    const hash = bcrypt.hashSync(password, saltRounds)
+
+    await Account.create({
+            username,
+            age,
+            mobile_number,
+            password: hash
+    }).then((data) => {        
+        return res.send({ 
+            token: generateToken({ id: data._id }),
+            id: data._id,
+            code
+        })
+    }).catch((err) => {
+            console.log('[POST] Message Error => '+err)
     })
 
 })

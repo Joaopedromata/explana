@@ -1,70 +1,65 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'
 import api from '../../services/api'
 import './styles.css'
+import logo from '../../assets/Explana.png'
 
-const SignIn = (props) => {
+const SignIn = () => {
 
-const mobile_number = props.location.state.mobile_number    
-const activation_code = props.location.state.code 
+    const history = useHistory()
 
-const history = useHistory()
+    const [ username, updateUsername ] = useState('')
+    const [ password, updatePassword ] = useState('')
 
-const [ age, updateAge ] = useState('')
-const [ password, updatePassword ] = useState('')
+    const handleFormSubmit = (e) => {
+        
+        const data = {
+            username,
+            password
+        }
 
-const handleFormSubmit = e => {
-    e.preventDefault()
-
-    const data = {
-        age,
-        activation_code,
-        mobile_number,
-        password
+        api.post('/signin', data)
+            .then((res) => {
+                history.push('/messages', res.data)
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+        e.preventDefault()
     }
 
-    api.post('/account', data).then((res) => {
-        
-        const token = res.data.token
-        const id = res.data.id
-
-        history.push('/messages', { 
-            token,
-            id
-        })
-
-        updatePassword('')
-        updateAge('')
-    }).catch((err) => {
-        console.log(err)
-    })
-
-    
-}
-
-
-return (
-    <form className="form-account" onSubmit={handleFormSubmit}>
-        <input 
-            className="form__field"
-            placeholder="Digite sua idade"
-            onChange={e => updateAge(e.target.value)}
-            value={age}
-        />
-         <input 
-            className="form__field"
-            value={mobile_number}
-        />
-         <input 
-            className="form__field"
-            placeholder="Digite sua senha"
-            onChange={e => updatePassword(e.target.value)}
-            value={password}
-        />
-        <button className="button" type= "submit">Cadastrar</button>
-    </form>
-)
-
+    return (
+        <section className="container__signin">
+            <form className="form-signin" onSubmit={handleFormSubmit}>
+                <img src={logo} alt="explana" className="logo" />
+                <div className="input__group--signin">
+                    <input 
+                        className="form__field--signin"
+                        onChange={e => updateUsername(e.target.value)}
+                        value={username}
+                    />
+                    <input 
+                        className="form__field--signin"
+                        type="password"
+                        onChange={e => updatePassword(e.target.value)}
+                        value={password}
+                    />
+                </div>
+                <div className="button__group--signin"> 
+                    <button className="button--messages" type= "submit">EXPLANAR</button>
+                    <Link 
+                        className="link__button--signup"
+                        to="/signup"
+                    >
+                        REGISTRAR-SE
+                    </Link>
+                </div>
+                <Link className="link--forgot">
+                    Esqueci minha senha
+                </Link>
+            </form>
+        </section>
+    )
 }
 
 export default SignIn
