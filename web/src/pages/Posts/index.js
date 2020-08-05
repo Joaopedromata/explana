@@ -8,6 +8,7 @@ const socket = io('http://localhost:3333')
 socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
 
 
+
 const Posts = (props) => {
 
     const token = props.location.state.token
@@ -25,13 +26,14 @@ const Posts = (props) => {
                 Servers: server
             }
         }).then(res => updateMessages([...res.data].reverse()))       
-    }, [])
+    }, [token, server])
 
     useEffect(() => {
         const handleNewMessage = newMessage => 
             updateMessages([newMessage,...messages])
-            socket.on('chat.message', handleNewMessage)
-            return () => socket.off('chat.message', handleNewMessage)
+            socket.on('chatMessage', handleNewMessage)
+
+            return () => socket.off('chatMessage', handleNewMessage)
     }, [messages])
 
     const handleFormSubmit = e => {
@@ -42,7 +44,10 @@ const Posts = (props) => {
             server,
             message
         }
-        socket.emit('chat.message', data)       
+
+        
+        socket.emit('joinRoom', data.server)
+        socket.emit('chatMessage', data)       
         api.post('/messages', data).catch((err) => {
              console.log(err)
         } )

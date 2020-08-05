@@ -48,7 +48,7 @@ const SignIn = () => {
                     />
                 </div>
                 <div className="button__group--signin"> 
-                    <button className="button--messages" type= "submit">EXPLANAR</button>
+                    <button className="button--messages" type="submit">EXPLANAR</button>
                     <Link 
                         className="link__button--signup"
                         to="/signup"
@@ -56,7 +56,10 @@ const SignIn = () => {
                         REGISTRAR
                     </Link>
                 </div>
-                <Link className="link--forgot">
+                <Link 
+                    className="link--forgot"
+                    to="/reset"
+                >
                     Esqueci minha senha
                 </Link>
             </form>

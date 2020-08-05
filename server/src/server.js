@@ -88,7 +88,61 @@ app.post('/account', async (req, res) => {
     
 })
 
-app.get('/server', async (req,res) => {
+app.post('/reset', async (req, res) => {
+    const { mobile_number } = req.body
+
+    const checkUser = (await Account.findOne({ mobile_number }))
+
+    if(!checkUser)
+        return res.status(400).send('[POST] Message Error => Mobile number not found')
+
+
+    code = getRandomNumbers() 
+
+    // client.sms.enviar(mobile_number,
+    //     `Seu código de ativação Explana: ${code}`
+    // ).then((data) => {
+    //     console.log(data)
+    // })
+    // .catch((err) => {
+    //     console.error(err)
+    // })
+        
+    console.log(code)
+
+    return res.status(200).send({ id: checkUser._id })
+})
+
+app.post('/checkreset', async (req, res) => {
+    const { userId, activation_code } = req.body
+
+    if(parseInt(activation_code) !== code)
+
+        return res.status(400).send('[POST] Message Error => Code is not right')
+      
+    return res.status(200).send({ id: userId })
+   
+})
+
+app.post('/newpass', async (req, res) => {
+    
+    const { userId, password } = req.body
+
+    const hash = bcrypt.hashSync(password, saltRounds)
+
+    Account.findOne({ _id: userId }).then((data) => {
+        data.password = hash
+        data.save().then(() => {
+            return res.status(200).send('[PUT] Message Success => The Password was changed')
+        })
+       
+    }).catch((err) => {
+        console.log(err)
+    })
+
+})
+
+app.get('/server', async (req, res) => {
 
     const servers = await Server.find()
 
@@ -142,25 +196,30 @@ app.get('/messages', authMiddleware , async (req, res) => {
     return res.json(messages)
 })
 
+
 io.on('connection', socket => {
-    console.log('[IO] Connection => Server has a new connection', socket.id)
-    socket.on('chat.message', data => {
-        io.emit('chat.message', data)
+    socket.on('joinRoom', (server) => {
+        socket.join(server)
+    })
+
+    socket.on('chatMessage', data => {
+        io.to(data.server).emit('chatMessage', data)
         app.post('/messages', async (req, res) => {            
             await Message.create(req.body).then(() => {
                 return res.json(req.body)
             }).catch((err) => {
                 console.log('[POST] Message Error => '+err)
-            })
-            
-            
+            }) 
         })
-        
     })
+
     socket.on('disconnect', () => {
         console.log('[SOCKET] Disconnect => A connection was disconnected')
     })
 })
+
+
+
 
 http.listen(3333, () => {
     console.log('Server has been connected')
