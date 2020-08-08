@@ -1,0 +1,11 @@
+.flash--selected{
+    color: #fff;
+    opacity: 1;
+    transition: opacity 500ms
+}
+
+.flash--unselected{
+    opacity: 0;
+    transition: opacity 500ms
+}
+

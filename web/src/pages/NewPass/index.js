@@ -4,25 +4,32 @@ import { useHistory } from 'react-router-dom'
 
 const NewPass = (props) => {
 
-    const userId = props.location.state.userId
-
+    
     const history = useHistory()
 
     const [ password, updatePassword ] = useState('')
     const [ confirmPassword, updateConfirmPassword ] = useState('')
 
-    const handleFormSubmit = (e) => {
+    const userId = props.location.state.id
 
-        const data = {
+    const data = {
             userId,
             password
         }
 
-        if(password === confirmPassword)
-            return api.post('/newpass', data).then(() => {
-                history.push('/')
-            })
+    const handleFormSubmit = async (e) => {
+  
+        if(password !== confirmPassword){
+            alert('sennha incompatível')
+        }
+             
 
+        api.post('/newpass', data).then(() => {
+            history.push('/')
+        }).catch((err) => {
+            console.log(err)
+        })
+       
         e.preventDefault()
     }
 

@@ -19,8 +19,8 @@ const CheckReset = (props) => {
             activation_code: code,
         }
 
-        api.post('/checkreset', data).then((res) => {
-            history.push('/newpass', { userId: res.data.id })
+        api.post('/checkreset', data).then(() => {
+            history.push('/newpass', { id })
         }).catch((err) => {
             console.log(err)
         })

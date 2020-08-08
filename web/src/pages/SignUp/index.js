@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api'
-import logo from '../../assets/Explana.png'
+import logo from '../../assets/logo-explana.svg'
 import './styles.css'
 
 const SignIn = () => {

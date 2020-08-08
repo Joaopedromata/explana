@@ -45,7 +45,7 @@ app.post('/signin', async (req, res) => {
 
     if (!checkUser)
 
-        return res.status(400).send('[GET] Message Error => The username is not exist')    
+        return res.status(401).send('[GET] Message Error => The username is not exist')    
     
     const match = bcrypt.compareSync(password, checkUser.password)
 
@@ -56,7 +56,7 @@ app.post('/signin', async (req, res) => {
             id: checkUser._id 
         })
 
-    return res.status(400).send('[GET] Message Error => The password is wrong') 
+    return res.status(401).send('[GET] Message Error => The password is wrong') 
     
 })
 
@@ -130,7 +130,7 @@ app.post('/newpass', async (req, res) => {
 
     const hash = bcrypt.hashSync(password, saltRounds)
 
-    Account.findOne({ _id: userId }).then((data) => {
+    await Account.findOne({ _id: userId }).then((data) => {
         data.password = hash
         data.save().then(() => {
             return res.status(200).send('[PUT] Message Success => The Password was changed')
