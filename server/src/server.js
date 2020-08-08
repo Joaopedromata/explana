@@ -176,11 +176,7 @@ app.post('/check', async (req, res) => {
             mobile_number,
             password: hash
     }).then((data) => {        
-        return res.send({ 
-            token: generateToken({ id: data._id }),
-            id: data._id,
-            code
-        })
+        return res.status(200).send('[POST] Message Success => The user was created')
     }).catch((err) => {
             console.log('[POST] Message Error => '+err)
     })

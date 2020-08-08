@@ -12,11 +12,11 @@ const SignIn = () => {
     const [ username, updateUsername ] = useState('')
     const [ password, updatePassword ] = useState('')
     const [ error, updateError ] = useState(false)
-    const [ valueError, updateValueError ] = useState(false)
+    const [ valueError, updateValueError ] = useState('')
 
     const handleFormSubmit = (e) => {
 
-        const userPassNull = () => {
+        const userValueNull = () => {
             updateValueError('Preencha todos os campos')
             updateError(true)
         }
@@ -24,10 +24,10 @@ const SignIn = () => {
         e.preventDefault()
 
         if(username === '' || username == null || typeof username == undefined)
-          return userPassNull()
+          return userValueNull()
         
         if(password === '' || password == null || typeof password == undefined)
-          return userPassNull()
+          return userValueNull()
         
 
         const data = {

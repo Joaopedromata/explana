@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import api from '../../services/api'
 import logo from '../../assets/logo-explana.svg'
 import './styles.css'
+import FlashMessages from '../../components/FlashMessages'
 
 const SignIn = () => {
 
@@ -13,12 +14,48 @@ const [ age, updateAge ] = useState('')
 const [ mobile_number, updateMobile_number ] = useState('')
 const [ password, updatePassword ] = useState('')
 const [ confirmPassword, updateConfirmPassword ] = useState('')
+const [ error, updateError ] = useState(false)
+const [ valueError, updateValueError ] = useState('')
 
 const handleFormSubmit = e => {
     e.preventDefault()
 
+    const userValueNull = () => {
+        updateValueError('Preencha todos os campos')
+        updateError(true)
+    }
+
+    const passWrong = () => {
+        updateValueError('As senhas não coincidem')
+        updateError(true)
+    }
+
+    const minorAge = () => {
+        updateValueError('Você deve ter no mínimo 18 anos')
+        updateError(true)
+    }
+
+
+    if (username === '' || username == null || typeof username == undefined)
+        return userValueNull()
+
+    if (age === '' || age == null || typeof age == undefined)
+        return userValueNull()
+    
+    if (mobile_number === '' || mobile_number == null || typeof mobile_number == undefined)
+        return userValueNull()
+    
+    if (password === '' || password == null || typeof password == undefined)
+        return userValueNull()
+
+    if (confirmPassword === '' || confirmPassword == null || typeof confirmPassword == undefined)
+        return userValueNull()
+
     if (password !== confirmPassword)
-        return console.log('As senhas não coincidem')
+        return passWrong()
+
+    if (age < 18)
+        return minorAge()
 
     const data = {
         username,
@@ -46,6 +83,10 @@ return (
     <section className="container__signup">
         <form className="form-signup" onSubmit={handleFormSubmit}>
             <img src={logo} alt="explana" className="logo" />
+            <FlashMessages 
+                init={error}
+                text={valueError}
+            />
             <div className="input__group--signup">
                 <label className="input__label">USUÁRIO</label>
                 <input 
