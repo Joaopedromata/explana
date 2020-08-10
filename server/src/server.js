@@ -65,6 +65,12 @@ app.post('/account', async (req, res) => {
 
     const { username, age, mobile_number, password } = req.body
     
+    const checkUser = (await Account.findOne({ username }))
+
+    if (checkUser)
+
+        return res.status(400).send('[POST] Message Error => The username is already exist')
+
     const checkAccount = (await Account.findOne({ mobile_number }))
 
     if (checkAccount)

@@ -7,8 +7,6 @@ import NavBar from '../../components/NavBar'
 const socket = io('http://localhost:3333')
 socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
 
-
-
 const Posts = (props) => {
 
     const token = props.location.state.token
@@ -19,7 +17,14 @@ const Posts = (props) => {
     const [ message, updateMessage ] = useState('')
     const [ messages, updateMessages ] = useState([])
 
+    const data = {
+        id: myId,
+        server,
+        message
+    }
+
     useEffect(() => {
+        socket.emit('joinRoom', data.server)
         api.get('/messages', {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -29,6 +34,7 @@ const Posts = (props) => {
     }, [token, server])
 
     useEffect(() => {
+        
         const handleNewMessage = newMessage => 
             updateMessages([newMessage,...messages])
             socket.on('chatMessage', handleNewMessage)
@@ -39,12 +45,7 @@ const Posts = (props) => {
     const handleFormSubmit = e => {
         e.preventDefault()
         
-        const data = {
-            id: myId,
-            server,
-            message
-        }
-
+        
         
         socket.emit('joinRoom', data.server)
         socket.emit('chatMessage', data)       
@@ -60,15 +61,7 @@ const Posts = (props) => {
     <>
         <NavBar value={serverName} />
         <main className="container">
-            <ul className="list">
-                <li className='list__item list__item--mine'>
-                    <span className='message message--mine'>
-                        <strong>Desconto Zé Delivery</strong>
-                        Compre com nossos colaboradores. Use nosso cupom de desconto EXPLANANOZÉ e ganhe 15% de desconto no seu primeiro pedido
-                        <p>hà 16 minutos</p>
-                    </span>
-                </li>
-                    
+            <ul className="list">                    
                 {messages.map((data, index) => (
                     <li 
                         className={`list__item list__item--${data.id === myId ? 'mine' : 'other'}`}

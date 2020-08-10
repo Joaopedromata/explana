@@ -73,8 +73,9 @@ const handleFormSubmit = e => {
         updateAge('')
         updateMobile_number('')
         
-    }).catch((err) => {
-        console.log(err)
+    }).catch(() => {
+        updateValueError('O número de telefone ou usuário já existem')
+        updateError(true)
     })  
 }
 

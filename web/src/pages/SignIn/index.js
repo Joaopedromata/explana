@@ -4,6 +4,7 @@ import api from '../../services/api'
 import './styles.css'
 import logo from '../../assets/logo-explana.svg'
 import FlashMessages from '../../components/FlashMessages'
+import { FiUser, FiLock } from 'react-icons/fi'
 
 const SignIn = () => {
 
@@ -40,7 +41,7 @@ const SignIn = () => {
                history.push('/server', res.data)
             })
             .catch(() => {
-                updateValueError('Erro no método de entrada')
+                updateValueError('Usuário ou senha incorretos')
                 
                 updateError(true)
             })
@@ -50,29 +51,43 @@ const SignIn = () => {
     return (
         <section className="container__signin">
             <form className="form-signin" onSubmit={handleFormSubmit}>
-                <img src={logo} alt="explana" className="logo" />
+                <div className="logo--group">
+                    <img src={logo} alt="explana" className="logo" />
+                    <p className="logo--title">explana!</p>
+                </div>
                     <FlashMessages 
                         init={error}
                         text={valueError}
                     />
                 <div className="input__group--signin">
-                    <label className="input__label">USUÁRIO</label>
-                    <input 
-                        className="form__field--signin"
-                        onChange={e => updateUsername(e.target.value)}
-                        value={username}
-                    />
-                    <label className="input__label">SENHA</label>
-                    <input 
-                        autoComplete="current-password"
-                        className="form__field--signin"
-                        type="password"
-                        onChange={e => updatePassword(e.target.value)}
-                        value={password}
-                    />
+                    <div className="input__group--user">
+                        <input 
+                            className="form__field--signin"
+                            onChange={e => updateUsername(e.target.value)}
+                            value={username}
+                            placeholder="usuário"
+                        />
+                        <FiUser className="svg-fiuser" />
+                    </div>
+                    <div className="input__group--user">
+                        <input 
+                            autoComplete="current-password"
+                            className="form__field--signin"
+                            type="password"
+                            onChange={e => updatePassword(e.target.value)}
+                            value={password}
+                            placeholder="senha"
+                        />
+                        <FiLock className="svg-fiuser" />
+                    </div>
                 </div>
                 <div className="button__group--signin"> 
                     <button className="button--messages" type="submit">EXPLANAR</button>
+                    <div className="or">
+                        <hr className="line"/>
+                        ou
+                        <hr className="line"/>
+                    </div>
                     <Link 
                         className="link__button--signup"
                         to="/signup"
