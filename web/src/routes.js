@@ -8,6 +8,7 @@ import Servers from './pages/Servers'
 import ResetPass from './pages/ResetPass'
 import CheckReset from './pages/CheckReset'
 import NewPass from './pages/NewPass'
+import NewServer from './pages/NewServer'
 
 
 const Routes = () => {
@@ -22,6 +23,7 @@ const Routes = () => {
                 <Route path="/reset" component={ResetPass} />
                 <Route path="/checkreset" component={CheckReset} />
                 <Route path="/newpass" component={NewPass} />
+                <Route path="/newserver" component={NewServer} />
             </Switch>
         </BrowserRouter>
     )

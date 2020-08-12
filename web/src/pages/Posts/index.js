@@ -3,6 +3,7 @@ import './styles.css'
 import io from 'socket.io-client'
 import api from '../../services/api'
 import NavBar from '../../components/NavBar'
+import { FiSend, FiPlus } from 'react-icons/fi'
 
 const socket = io('http://localhost:3333')
 socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
@@ -59,8 +60,16 @@ const Posts = (props) => {
 
     return (
     <>
-        <NavBar value={serverName} />
         <main className="container">
+            <NavBar />
+            <section className="message--servers">
+                <div className="message--above">
+                    <div className="message--title">{serverName}</div>
+                    <button className="message--button">
+                        <div className="message--organization"><FiPlus size={20}/>participar</div>
+                    </button>
+                </div>
+            </section>
             <ul className="list">                    
                 {messages.map((data, index) => (
                     <li 
@@ -75,15 +84,18 @@ const Posts = (props) => {
                     </li>
                 ))}
             </ul>
-        </main>
-        <form className="form" onSubmit={handleFormSubmit}>
-            <input 
-                className="form__field"
-                placeholder="Explane aqui..."
-                onChange={e => updateMessage(e.target.value)}
-                value={message}
-            />
+            <form className="form" onSubmit={handleFormSubmit}>
+            <div className="post--message">
+                <textarea
+                    className="form__field"
+                    placeholder="Explane aqui..."
+                    onChange={e => updateMessage(e.target.value)}
+                    value={message}
+                />
+                <button type="submit" className="button--message"><FiSend size={20}/></button>
+            </div>
         </form>
+        </main>
     </>
     )
 }

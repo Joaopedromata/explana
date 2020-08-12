@@ -53,7 +53,7 @@ const SignIn = () => {
             <form className="form-signin" onSubmit={handleFormSubmit}>
                 <div className="logo--group">
                     <img src={logo} alt="explana" className="logo" />
-                    <p className="logo--title">explana!</p>
+                    <p className="logo--title">explana</p>
                 </div>
                     <FlashMessages 
                         init={error}

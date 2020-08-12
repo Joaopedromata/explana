@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import api from '../../services/api'
 import FlashMessages from '../../components/FlashMessages'
-
+import logo from '../../assets/logo-explana.svg'
 
 const CheckReset = (props) => {
 
@@ -48,17 +48,31 @@ const CheckReset = (props) => {
 
 
     return (
-        <form onSubmit={handleFormSubmit}>
-            <FlashMessages 
-                init={error}
-                text={valueError}
-            />
-            <input 
-                placeholder="code"
-                onChange={e => updateCode(e.target.value)}
-                value={code}
-            />
-        </form>
+        <section className="container--code">
+            <form className="form-code" onSubmit={handleFormSubmit}>
+                <div className="logo--group">
+                    <img src={logo} alt="explana" className="logo" />
+                    <p className="logo--title">explana</p>
+                </div>
+                <FlashMessages 
+                        init={error}
+                        text={valueError}
+                />
+                <section className="form--group">
+                    <input 
+                        className="form__field--code"
+                        placeholder="Digite seu código"
+                        onChange={e => updateCode(e.target.value)}
+                        value={code}
+                    />
+                    <button className="button--send" type="submit" >ENVIAR</button>
+                </section>
+                <section className="link--group">
+                    <Link className="link--return">Reenviar meu código</Link>
+                    <Link className="link--return">Não recebi meu código</Link>
+                </section>
+            </form>
+        </section>
     )
 }
 

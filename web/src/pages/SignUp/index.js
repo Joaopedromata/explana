@@ -83,44 +83,47 @@ const handleFormSubmit = e => {
 return (
     <section className="container__signup">
         <form className="form-signup" onSubmit={handleFormSubmit}>
-            <img src={logo} alt="explana" className="logo" />
+            <div className="logo--group">
+                <img src={logo} alt="explana" className="logo" />
+                <p className="logo--title">explana</p>
+            </div>
             <FlashMessages 
                 init={error}
                 text={valueError}
             />
             <div className="input__group--signup">
-                <label className="input__label">USUÁRIO</label>
                 <input 
                     className="form__field--signup"
                     onChange={e => updateUsername(e.target.value)}
                     value={username}
+                    placeholder="usuário"
                 />
-                <label className="input__label">IDADE</label>
                 <input 
                     className="form__field--signup"
                     onChange={e => updateAge(e.target.value)}
                     value={age}
+                    placeholder="idade"
                 />
-                <label className="input__label">CELULAR</label>
                 <input 
                     className="form__field--signup"
                     onChange={e => updateMobile_number(e.target.value)}
                     value={mobile_number}
+                    placeholder="celular"
                 />
-                <label className="input__label">SENHA</label>
                 <input 
                     className="form__field--signup"
                     onChange={e => updatePassword(e.target.value)}
                     type="password"
                     value={password}
-                />
-                <label className="input__label">CONFIRME SUA SENHA</label>
+                    placeholder="senha"
+               />
                 <input 
                     className="form__field--signup"
                     onChange={e => updateConfirmPassword(e.target.value)}
                     type="password"
                     value={confirmPassword}
-                />
+                    placeholder="confirme sua senha"
+               />
             </div>
             <button className="button--register" type="submit" >REGISTRAR</button>
         </form>

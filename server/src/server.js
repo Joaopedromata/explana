@@ -221,9 +221,10 @@ io.on('connection', socket => {
 })
 
 
+const PORT = process.env.PORT || 3333
 
 
-http.listen(3333, () => {
+http.listen(PORT, () => {
     console.log('Server has been connected')
 })
 

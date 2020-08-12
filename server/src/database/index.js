@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
+const db = require('../config/db')
 
 mongoose.Promise = global.Promise
-    mongoose.connect('mongodb://localhost/explana',
+    mongoose.connect(db.mongoURI,
         {useNewUrlParser: true}
     )
     .then(() => {
